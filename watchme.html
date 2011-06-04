@@ -4,7 +4,7 @@
 	 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<script src="socket.io.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript" charset="utf-8">
-		var socket = new io.Socket(null, {rememberTransport: false, port: 10271});
+		var socket = new io.Socket();
 		socket.connect();
 		socket.addEvent('message', function(data) {
             
