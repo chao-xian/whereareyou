@@ -41,7 +41,7 @@ server = http.createServer(function(request, response){
 });
 
 // make the server listen on port 8080
-server.listen(8080);
+server.listen(10271);
 
 // create a socket listener attached to the server
 var socket = io.listen(server);
