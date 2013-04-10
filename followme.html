@@ -9,8 +9,14 @@
 		socket.connect();		
 		    //navigator.geolocation.getCurrentPosition(function(position) {
 navigator.geolocation.watchPosition(function(position) {
-		    socket.send(position.coords.latitude);
-		    socket.send(position.coords.longitude);
+		    //socket.send(position.coords.latitude);
+		    //socket.send(position.coords.longitude);
+		    //socket.send(position);
+		    var pos = {
+		        'latitude': position.coords.latitude,
+		        'longitude': position.coords.longitude
+		    };
+		    socket.send(pos);
 		});
     </script>
 </head>

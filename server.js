@@ -3,7 +3,8 @@ url = require('url'),
 path = require('path'),
 fs = require('fs'),
 io = require('socket.io'),
-sys = require('sys');
+sys = require('sys'),
+oAuth = require('oauth').OAuth;
 
 
 // create the http server
@@ -11,6 +12,7 @@ server = http.createServer(function(request, response){
     
 	var uri = url.parse(request.url).pathname;
 	var filename = path.join(process.cwd(), uri);
+	
     
     // check whether the requested file exists
 	path.exists(filename, function(exists) {
@@ -20,6 +22,17 @@ server = http.createServer(function(request, response){
 			response.writeHeader(404, {'Content-Type':'text/plain'});
 			response.end("Can''t find it...");
 		}
+		
+		oAuth.getOAuthRequestToken(
+		    function(error, oauth_token, oauth_token_secret, results) {
+		        if (error) new Error(error.data);
+		        else {
+		            request.session.oauth.token = oauth_token;
+		            request.session.oauth.token_secret = oauth_token_secret;
+		            response.redirect('https://twitter.com/oauth/authenticate?oauth_token=' + oauth_token);
+		        }
+		    }
+		);
         
         // serve the requested file
 		fs.readFile(filename, 'binary',function(err, file){
